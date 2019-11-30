@@ -105,8 +105,10 @@
 
   "abouts_title":"关于我们",
   "abouts_info_content":"\nArdor计算器是Ardor.App团队打造的实用加密数据存储&&计算器移动应用程序，本应用程序特点：\n\n1.安全：数据本地存储采用AES-CBC-256高强度加密算法进行数据加密。\n2.绿色：只需存储权限，无任何其他隐私权限申请（甚至网络访问权限都没有），不会收集和传输用户任何数据。\n3.开源：经得起审计，无后门，放心实用，如有需要，可进行二次定制开发，自行编译。 ",
-  "abouts_info_version":"\n\n当前版本号：$version \n应用签名信息(SHA256)：$singInfo\n\n获取更多支持和最新版本\n请自行访问:  ",
-  "abouts_info_url":"https://calculator.ardor.app",
+  "abouts_info_version":"\n\n当前版本号：$version \n应用签名信息(SHA256)：$singInfo\n\n获取更多支持和最新版本\n请自行访问官网:  \n",
+  "abouts_info_url":"https://www.ardor.app",
+  "abouts_info_github_info":"\n开源地址：\n",
+  "abouts_info_github_url":"https://github.com/ardorapp/ardor-calculator",
 
   "app_name":"Ardor 计算器"
 }

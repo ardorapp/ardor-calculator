@@ -16,7 +16,7 @@ import 'package:ardor_calculator/library/callback.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-abstract class CalBase extends StatelessWidget {
+abstract class CalBase extends StatefulWidget {
 
   StringCallback passwordInputCallback;
 

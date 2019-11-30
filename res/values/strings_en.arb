@@ -106,8 +106,10 @@
 
   "abouts_title":"Abouts",
   "abouts_info_content":"\n\nArdor calculator is a practical encrypted data storage & calculator mobile application created by ardor. App team.\n\n1. Security: local data storage adopts AES-CBC-256 high-strength encryption algorithm for data encryption.\n2. Green: only need to store the permission, without any other privacy permission application (even without network access permission), will not collect and transmit any user data.\n3. Open source: Stand up to audit, no backdoor, reliable and practical, if necessary, you can conduct secondary customized development and self-compilation.",
-  "abouts_info_version":"\n\nCurrent version number: $version\nApplication signature information (SHA256) : $singInfo\n\nGet more support and the latest version\nPlease visit: ",
-  "abouts_info_url":"https://calculator.ardor.app",
+  "abouts_info_version":"\n\nCurrent version number: $version\nApplication signature information (SHA256) : $singInfo\n\nGet more support and the latest version\nPlease visit: \n",
+  "abouts_info_url":"https://www.ardor.app",
+  "abouts_info_github_info":"\nOpen source address:\n",
+  "abouts_info_github_url":"https://github.com/ardorapp/ardor-calculator",
 
   "app_name":"Ardor Calculator"
 

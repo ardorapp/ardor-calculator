@@ -34,6 +34,19 @@ class CalBlockChain extends CalBase {
   }
 
   @override
+  void reset() {
+    // TODO: implement reset
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _CalBlockChainState();
+  }
+}
+
+class _CalBlockChainState extends State<CalBlockChain> {
+
+  @override
   Widget build(BuildContext context) {
     return new Center(
       child: new Column(
@@ -44,10 +57,5 @@ class CalBlockChain extends CalBase {
         ],
       ),
     );
-  }
-
-  @override
-  void reset() {
-    // TODO: implement reset
   }
 }

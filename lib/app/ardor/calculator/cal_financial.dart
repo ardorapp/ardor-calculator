@@ -32,6 +32,19 @@ class CalFinancial extends CalBase {
   }
 
   @override
+  void reset() {
+    // TODO: implement reset
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _CalCalFinancialState();
+  }
+}
+
+class _CalCalFinancialState extends State<CalFinancial> {
+
+  @override
   Widget build(BuildContext context) {
     return new Center(
       child: new Column(
@@ -42,10 +55,5 @@ class CalFinancial extends CalBase {
         ],
       ),
     );
-  }
-
-  @override
-  void reset() {
-    // TODO: implement reset
   }
 }

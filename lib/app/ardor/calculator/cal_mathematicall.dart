@@ -33,6 +33,21 @@ class CalMathematical extends CalBase {
   }
 
   @override
+  void reset() {
+    // TODO: implement reset
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _CalMathematicalState();
+  }
+
+}
+
+
+class _CalMathematicalState extends State<CalMathematical> {
+
+  @override
   Widget build(BuildContext context) {
     return new Center(
       child: new Column(
@@ -44,10 +59,4 @@ class CalMathematical extends CalBase {
       ),
     );
   }
-
-  @override
-  void reset() {
-    // TODO: implement reset
-  }
-
 }

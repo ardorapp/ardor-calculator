@@ -40,6 +40,17 @@ class Abouts extends StatelessWidget {
               ..onTap = () {
                 _launchURL(S.current.abouts_info_url);
               },
+          ),
+          TextSpan(
+              text: S.current.abouts_info_github_info,
+              style: TextStyle(color: Colors.black54, fontSize: 16)),
+          TextSpan(
+            text: S.current.abouts_info_github_url,
+            style: TextStyle(color: Colors.blue, fontSize: 16),
+            recognizer: new TapGestureRecognizer()
+              ..onTap = () {
+                _launchURL(S.current.abouts_info_url);
+              },
           )
         ]),
       ),

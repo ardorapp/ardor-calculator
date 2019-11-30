@@ -22,7 +22,9 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get abouts_info_content => "\n\nArdor calculator is a practical encrypted data storage & calculator mobile application created by ardor. App team.\n\n1. Security: local data storage adopts AES-CBC-256 high-strength encryption algorithm for data encryption.\n2. Green: only need to store the permission, without any other privacy permission application (even without network access permission), will not collect and transmit any user data.\n3. Open source: Stand up to audit, no backdoor, reliable and practical, if necessary, you can conduct secondary customized development and self-compilation.";
-  String get abouts_info_url => "https://calculator.ardor.app";
+  String get abouts_info_github_info => "\nOpen source address:\n";
+  String get abouts_info_github_url => "https://github.com/ardorapp/ardor-calculator";
+  String get abouts_info_url => "https://www.ardor.app";
   String get abouts_title => "Abouts";
   String get account_edit_label_account => "Account";
   String get account_edit_label_address => "Address";
@@ -107,7 +109,7 @@ class S implements WidgetsLocalizations {
   String get treasureInit_tips_please_import_the_data_source => "Please import the data source or paste the data source from the cut version.";
   String get treasureInit_tooltip_PasteImportData => "Paste Import Data";
   String get treasureInit_tooltip_ReadImportData => "Read Import Data";
-  String abouts_info_version(String version, String singInfo) => "\n\nCurrent version number: $version\nApplication signature information (SHA256) : $singInfo\n\nGet more support and the latest version\nPlease visit: ";
+  String abouts_info_version(String version, String singInfo) => "\n\nCurrent version number: $version\nApplication signature information (SHA256) : $singInfo\n\nGet more support and the latest version\nPlease visit: \n";
   String account_tips_select_operation_delete(String account) => "Delete: This operation will delete the ($account) information, please be cautious.";
   String account_tips_select_operation_edit(String account) => "Edit: Edit the ($account) information.";
   String account_tips_select_operation_for_account(String account) => "Please select the pair ($account) operation.";
@@ -143,6 +145,8 @@ class $zh_CN extends S {
   String get group_tips_search_text => "请输入查找内容";
   @override
   String get treasureExport_tooltip_SaveExportData => "保存导出数据";
+  @override
+  String get abouts_info_github_url => "https://github.com/ardorapp/ardor-calculator";
   @override
   String get treasureExport_tooltip_CopyExportData => "复制导出数据";
   @override
@@ -194,7 +198,7 @@ class $zh_CN extends S {
   @override
   String get formula_warning_logic_illegal_can_not_be_brackets => "公式逻辑错误:  不能输入 )";
   @override
-  String get abouts_info_url => "https://calculator.ardor.app";
+  String get abouts_info_url => "https://www.ardor.app";
   @override
   String get treasureExport_select_export_ciphertext_data => "2.导出密文数据";
   @override
@@ -258,6 +262,8 @@ class $zh_CN extends S {
   @override
   String get treasureInit_tips_please_import_the_data_source => "请导入数据源，或从剪切版粘贴数据源。";
   @override
+  String get abouts_info_github_info => "\n开源地址：\n";
+  @override
   String get formula_warning_memory_cache_is_empty => "缓存已为空";
   @override
   String get calFinancial_name => "金融";
@@ -316,7 +322,7 @@ class $zh_CN extends S {
   @override
   String group_tips_select_operation_delete(String group) => "删除：此操作会将($group)组及组名下的信息都删除，请谨慎操作。";
   @override
-  String abouts_info_version(String version, String singInfo) => "\n\n当前版本号：$version \n应用签名信息(SHA256)：$singInfo\n\n获取更多支持和最新版本\n请自行访问:  ";
+  String abouts_info_version(String version, String singInfo) => "\n\n当前版本号：$version \n应用签名信息(SHA256)：$singInfo\n\n获取更多支持和最新版本\n请自行访问官网:  \n";
   @override
   String account_tips_select_operation_edit(String account) => "编辑：对($account)信息进行编辑。";
   @override

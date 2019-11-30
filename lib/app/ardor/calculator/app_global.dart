@@ -97,7 +97,7 @@ class AppGlobal {
         _locale = Locale(config.localeLanguageCode,"");
       }
     } else {
-      _locale = Locale("en","");
+      _locale = Locale("zh","CN");
     }
 
     calculatorIndex = config.calculatorIndex;

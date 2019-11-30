@@ -86,10 +86,12 @@ android {
         variant.outputs.all { output ->
             def outputFile = output.outputFile
             def buildTypeName = variant.buildType.name
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                // 输出apk名称为 ArdorCalculator_v1.0.0_2019.11.27_18.13_release.apk
-                def fileName = "ArdorCalculator_v${defaultConfig.versionName}_${releaseTime()}_${buildTypeName}.apk"
-                outputFileName = fileName
+            if (buildTypeName == 'release') {
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    // 输出apk名称为 ArdorCalculator_v1.0.0_2019.11.27_18.13_release.apk
+                    def fileName = "ArdorCalculator_v${defaultConfig.versionName}_${releaseTime()}_${buildTypeName}.apk"
+                    outputFileName = fileName
+                }
             }
         }
     }

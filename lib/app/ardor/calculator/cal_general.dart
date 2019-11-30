@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:ardor_calculator/app/ardor/calculator/widget/layout_notifier.dart';
 import 'package:ardor_calculator/app/ardor/calculator/widget/toast.dart';
 import 'package:ardor_calculator/generated/i18n.dart';
 import 'package:ardor_calculator/library/applog.dart';
+import 'package:ardor_calculator/library/callback.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:ardor_calculator/app/ardor/calculator/cal_base.dart';
@@ -27,6 +30,35 @@ typedef CalculatorCallbackDynamic = void Function(dynamic key);
 
 // ignore: must_be_immutable
 class CalGeneral extends CalBase {
+  _CalGeneralState __calGeneralState;
+
+  CalGeneral(passwordInputCallback) : super(passwordInputCallback);
+
+  @override
+  String getName() {
+    return S.current.calGeneral_name;
+  }
+
+  @override
+  IconData getIcon() {
+    return Icons.directions_car;
+  }
+
+  @override
+  void reset() {
+    __calGeneralState.reset();
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    __calGeneralState = _CalGeneralState((String text) {
+      onClickToTreasure(text);
+    });
+    return __calGeneralState;
+  }
+}
+
+class _CalGeneralState extends State<CalGeneral> {
   static final String _tag = "CalGeneral";
   FormulaController _formulaController;
 
@@ -34,8 +66,13 @@ class CalGeneral extends CalBase {
   InputDisplay _inputInfo = new InputDisplay();
   OutDisplay _outputInfo = new OutDisplay();
 
+  double displayW = 0;
+  double itemW = 0;
+  double itemH = 0;
   MemoryOperation _memoryOperationMAMC;
-  CalGeneral(passwordInputCallback) : super(passwordInputCallback) {
+  StringCallback onClickToTreasure;
+
+  _CalGeneralState(this.onClickToTreasure) {
     _formulaController = new FormulaController(
       (String msg) {
         onTools(msg);
@@ -52,51 +89,74 @@ class CalGeneral extends CalBase {
     );
   }
 
-  @override
-  String getName() {
-    return S.current.calGeneral_name;
-  }
-
-  @override
-  IconData getIcon() {
-    return Icons.directions_car;
+  void reset() {
+    _toolInfo.onOpera("");
+    _inputInfo.setText("");
+    _outputInfo.setText("");
+    _memoryOperationMAMC.setMemoryOperation(MemoryOpera.Add);
+    _formulaController.input(FormulaAction.Clean);
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Column(
-//        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Expanded(
-              flex: 1,
-              child: Container(
-                child: new Column(children: <Widget>[
-                  _toolInfo,
-                  _inputInfo,
-                  _outputInfo,
-                ]),
-              )),
-          new Container(
-            alignment: Alignment.bottomCenter,
-            height: 300,
-            padding: const EdgeInsets.all(1.0),
-            child: new StaggeredGridView.countBuilder(
-              crossAxisCount: 4,
-              itemCount: 23,
-              itemBuilder: (BuildContext context, int index) => new Container(
-                  child: new Center(
-                child: getKeyboard(index),
-              )),
-              staggeredTileBuilder: (int index) =>
-                  new StaggeredTile.count(1, index == 19 ? 1.2 : 0.6),
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-            ),
+    final size = MediaQuery.of(context).size;
+    final width = displayW == 0 ? size.width : displayW;
+    itemW = width / 4;
+    itemH = itemW * 0.6;
+    return NotificationListener<LayoutChangedNotification>(
+      onNotification: (notification) {
+        /// 收到布局结束通知
+        var size = context?.findRenderObject()?.paintBounds?.size;
+        if (displayW == 0) {
+          displayW = size.width;
+
+          ///需要延迟刷新，否则会报错
+          Future.delayed(Duration(milliseconds: 1), () {
+            setState(() {});
+          });
+        }
+
+        /// flutter1.7之后需要返回值,之前是不需要的.
+        return null;
+      },
+      child: CustomSizeChangedLayoutNotifier(
+        child: new Center(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Expanded(
+                  flex: 1,
+                  child: SingleChildScrollView(
+                    child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                      _toolInfo,
+                      _inputInfo,
+                      _outputInfo,
+                    ]),
+                  )),
+              new Container(
+                width: width,
+                height: itemH * 6,
+                padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                child: new StaggeredGridView.countBuilder(
+                  crossAxisCount: 4,
+                  itemCount: 23,
+                  itemBuilder: (BuildContext context, int index) =>
+                      new Container(
+                          child: new Center(
+                    child: getKeyboard(index),
+                  )),
+                  staggeredTileBuilder: (int index) =>
+                      new StaggeredTile.count(1, index == 19 ? 1.2 : 0.6),
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -222,15 +282,6 @@ class CalGeneral extends CalBase {
   void onWarning(String msg) {
     ArdorToast.show(msg);
   }
-
-  @override
-  void reset() {
-    _toolInfo.onOpera("");
-    _inputInfo.setText("");
-    _outputInfo.setText("");
-    _memoryOperationMAMC.setMemoryOperation(MemoryOpera.Add);
-    _formulaController.input(FormulaAction.Clean);
-  }
 }
 
 // ignore: must_be_immutable
@@ -253,7 +304,10 @@ class _ToolInfo extends State<ToolInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return new Text(_info, key: Key('tool_info'));
+    return new Container(
+      alignment: Alignment.topLeft,
+      child: new Text(_info, key: Key('tool_info')),
+    );
   }
 
   void setTextInfo(String info) {
@@ -282,22 +336,16 @@ class _InputDisplay extends State<InputDisplay> {
 
   @override
   Widget build(BuildContext context) {
-//    return new TextField(
-//      key:Key('input_display'),
-//      enabled: false,
-//      maxLines:10,//最大行数
-//      maxLength:100,
-//      controller: TextEditingController.fromValue(TextEditingValue(
-//        // 设置内容
-//          text: _info,
-//          // 保持光标在最后
-//          selection: TextSelection.fromPosition(TextPosition(
-//              affinity: TextAffinity.downstream, offset: _info.length)))),
-//      style: new TextStyle(fontSize: 20),
-//    );
-    return new Text(
-      _info,
-      key: Key('input_display'),
+    return new Container(
+      alignment: Alignment.topLeft,
+      child: new Text(
+        _info,
+        style: TextStyle(
+          fontSize: 40.0,
+          fontWeight: FontWeight.w600,
+        ),
+        key: Key('input_display'),
+      ),
     );
   }
 
@@ -334,22 +382,16 @@ class _OutDisplay extends State<OutDisplay> {
 
   @override
   Widget build(BuildContext context) {
-//    return new TextField(
-//      key:Key('out_display'),
-//      enabled: false,
-//      maxLines:10,//最大行数
-//      maxLength:100,
-//      controller: TextEditingController.fromValue(TextEditingValue(
-//          // 设置内容
-//          text: _info,
-//          // 保持光标在最后
-//          selection: TextSelection.fromPosition(TextPosition(
-//              affinity: TextAffinity.downstream, offset: _info.length)))),
-//      style: new TextStyle(fontSize: 20),
-//    );
-    return new Text(
-      _info,
-      key: Key('out_display'),
+    return new Container(
+      alignment: Alignment.bottomRight,
+      child: new Text(
+        _info,
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w400,
+        ),
+        key: Key('out_display'),
+      ),
     );
   }
 
